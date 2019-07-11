@@ -1,0 +1,7 @@
+# by default use heuristics
+*               text=auto
+
+# special text files
+# NB: we must undo effect of "* text=auto" here
+*.bat           !text eol=crlf
+*.sh            !text eol=lf
