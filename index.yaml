@@ -2,6 +2,15 @@ apiVersion: v1
 entries:
   audit-assistant:
   - apiVersion: v1
+    appVersion: 19.2.1.0023
+    created: "2020-01-15T14:45:52.69728+01:00"
+    description: A Helm chart for Fortify Audit Assistant application
+    digest: 04578e6ae3326738a367b5ec46d54a5c520144130e14b26c8bd45c78d059aaff
+    name: audit-assistant
+    urls:
+    - 19.2.1/audit-assistant-1.1.23+19.2.1.0023.tgz
+    version: 1.1.23
+  - apiVersion: v1
     appVersion: 19.2.0.0050
     created: "2019-07-25T13:45:27.2828475+02:00"
     description: A Helm chart for Fortify Audit Assistant application
@@ -10,4 +19,4 @@ entries:
     urls:
     - 19.2.0/audit-assistant-1.0.0+19.2.0.0050.tgz
     version: 1.0.0
-generated: "2019-07-25T13:45:27.2758711+02:00"
+generated: "2020-01-15T14:45:52.6741708+01:00"
