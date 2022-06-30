@@ -1,0 +1,110 @@
+# Custom values for audit-assistant chart.
+# This is a YAML-formatted file.
+
+# image is a map of the global Kubernetes image settings
+image:
+
+  # repositoryPrefix is a prefix for Audit Assistant images and is used to pull images from a private registry
+  repositoryPrefix: "fortifydocker/"
+
+  # pullPolicy is Kubernetes image pull policy, supported values are Always, IfNotPresent, and Never
+  pullPolicy: IfNotPresent
+
+  # dataTag is a tag to be used for audit-assistant-data image (provides Fortify data)
+  #dataTag: "2019.12.0002"
+
+
+# imagePullSecrets is a list of Kubernetes image pull secrets, for details, see the Kubernetes documentation
+# (https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
+imagePullSecrets: []
+
+
+# service is a map of the Kubernetes service resource options used to expose the Audit Assistant service
+service:
+
+  # type is Kubernetes service type (required), supported values are ClusterIP, NodePort, and LoadBalancer
+  type: ClusterIP
+
+  # port is external port of the service (required), the meaning depends on selected service type
+  port: 8080
+
+  # clusterIP is fixed service cluster IP address, if empty, Kubernetes assigns a value
+  clusterIP: ""
+
+  # loadBalancerIP is fixed load balancer IP address, if empty, the Kubernetes cloud provider assigns a value
+  loadBalancerIP: ""
+
+  # annotations is a map of annotations applied to the service
+  annotations: {}
+
+
+# db is a map of database connection settings
+db:
+
+  # host is address of the database server (required), a port may be included, for example, "db.host:5432"
+  host: ""
+
+  # name is Audit Assistant database name (required)
+  name: ""
+
+  # username is username required to access Audit Assistant database (required)
+  username: ""
+
+  # password is password (for username) required to access Audit Assistant database (required)
+  password: ""
+
+  # connectionProperties is a string of JDBC URL connection properties, for example, "defaultRowFetchSize=1000&socketTimeout=600"
+  connectionProperties: ""
+
+
+# app is a map of Audit Assistant settings
+app:
+
+  # hostUrl is a public URL address used by users to access Audit Assistant (required)
+  hostUrl: ""
+
+  # mailSender is sender email address for outgoing mail messages (required)
+  mailSender: ""
+
+  # mailServerHost is address of SMTP server for outgoing mail messages (required)
+  mailServerHost: ""
+
+  # mailServerPort is SMTP server port
+  mailServerPort: 25
+
+  # mailServerUsername is login username to SMTP server
+  mailServerUsername: ""
+
+  # mailServerPassword is password for login username to SMTP server
+  mailServerPassword: ""
+
+  # defaultAdminUserEmail is email address of administrator user that will be automatically created if does not exist yet (recommended)
+  defaultAdminUserEmail: ""
+
+  # defaultAdminUserPassword is initial password for newly created administrator user (recommended), see defaultAdminUserEmail
+  defaultAdminUserPassword: ""
+
+  # passwordLockoutThreshold is number of unsuccessful login attempts causing account lockout
+  passwordLockoutThreshold: 5
+
+  # passwordLockoutDurationMinutes is account lockout duration in minutes after unsuccessful login attempt count has reached threshold
+  passwordLockoutDurationMinutes: 10
+
+  # resetPasswordTokenExpirationMinutes is time in minutes that password reset token expires after it is generated
+  resetPasswordTokenExpirationMinutes: 30
+
+  # resetPasswordTokenExpirationMinutesNewUser is time in minutes that password reset token expires after it is generated for new user
+  resetPasswordTokenExpirationMinutesNewUser: 1440
+
+
+# productLicense is a text of Audit Assistant license file (required),
+# can be set using helm CLI option "--set-file=productLicense=path/to/license.xml"
+productLicense: ""
+
+
+# components is a map of configurations for Audit Assistant pods and containers
+components:
+  predict:
+    replicaCount: 2
+  webapp:
+    replicaCount: 2
