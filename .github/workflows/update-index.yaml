@@ -9,7 +9,7 @@ on:
       - "**.tgz"
 
 jobs:
-  release:
+  update-index:
     permissions:
       contents: write
     runs-on: ubuntu-latest
