@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
 
   # dataTag is a tag to be used for audit-assistant-data image (provides Fortify data)
-  #dataTag: "2023.03.0002"
+  #dataTag: "2024.01.0007"
 
 
 # imagePullSecrets is a list of Kubernetes image pull secrets, for details, see the Kubernetes documentation
