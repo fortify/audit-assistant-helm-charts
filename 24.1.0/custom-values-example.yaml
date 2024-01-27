@@ -1,0 +1,211 @@
+# Custom values for audit-assistant chart.
+# This is a YAML-formatted file.
+
+# image is a map of the global Kubernetes image settings
+image:
+
+  # repositoryPrefix is a prefix for Audit Assistant images and is used to pull images from a private registry
+  repositoryPrefix: "fortifydocker/"
+
+  # pullPolicy is Kubernetes image pull policy, supported values are Always, IfNotPresent, and Never
+  pullPolicy: IfNotPresent
+
+  # dataTag is a tag to be used for audit-assistant-data image (provides Fortify data)
+  #dataTag: "2024.01.0007"
+
+
+# imagePullSecrets is a list of Kubernetes image pull secrets, for details, see the Kubernetes documentation
+# (https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
+imagePullSecrets: []
+
+
+# service is a map of the Kubernetes service resource options used to expose the Audit Assistant service
+service:
+
+  # type is Kubernetes service type (required), supported values are ClusterIP, NodePort, and LoadBalancer
+  type: ClusterIP
+
+  # port is external port of the service (required), the meaning depends on selected service type
+  port: 8080
+
+  # clusterIP is fixed service cluster IP address, if empty, Kubernetes assigns a value
+  clusterIP: ""
+
+  # loadBalancerIP is fixed load balancer IP address, if empty, the Kubernetes cloud provider assigns a value
+  loadBalancerIP: ""
+
+  # annotations is a map of annotations applied to the service
+  annotations: {}
+
+
+# db is a map of database connection settings
+db:
+
+  # host is address of the database server (required), a port may be included, for example, "db.host:5432"
+  host: ""
+
+  # name is Audit Assistant database name (required)
+  name: ""
+
+  # username is username required to access Audit Assistant database (required)
+  username: ""
+
+  # password is password (for username) required to access Audit Assistant database (required)
+  password: ""
+
+  # connectionProperties is a string of JDBC URL connection properties, for example, "defaultRowFetchSize=1000&socketTimeout=600"
+  connectionProperties: "defaultRowFetchSize=1000"
+
+
+# app is a map of Audit Assistant settings
+app:
+  # hostUrl is a public URL address used by users to access Audit Assistant (required)
+  hostUrl: ""
+
+  # mailSender is sender email address for outgoing mail messages (required)
+  mailSender: ""
+
+  # mailServerHost is address of SMTP server for outgoing mail messages (required)
+  mailServerHost: ""
+
+  # mailServerPort is SMTP server port
+  mailServerPort: 25
+
+  # mailServerEncryption is to enable encryption while communicating with mail server.
+  # NONE:No encryption, OPTIONAL:Encryption with startTls but optional, STARTTLS:Encryption with startTls, SMTPS:Encryption with SSL/TLS protocol
+  mailServerEncryption: "OPTIONAL"
+
+  # defaultAdminUserEmail is email address of administrator user that will be automatically created if does not exist yet (recommended)
+  defaultAdminUserEmail: ""
+
+  # defaultAdminUserPassword is initial password for newly created administrator user (recommended), see defaultAdminUserEmail
+  defaultAdminUserPassword: ""
+ 
+  # passwordLockoutThreshold is number of unsuccessful login attempts causing account lockout
+  passwordLockoutThreshold: 5
+
+  # passwordLockoutDurationMinutes is account lockout duration in minutes after unsuccessful login attempt count has reached threshold
+  passwordLockoutDurationMinutes: 10
+
+  # resetPasswordTokenExpirationMinutes is time in minutes that password reset token expires after it is generated
+  resetPasswordTokenExpirationMinutes: 30
+
+  # resetPasswordTokenExpirationMinutesNewUser is time in minutes that password reset token expires after it is generated for new user
+  resetPasswordTokenExpirationMinutesNewUser: 1440
+  
+   # enable is to enable all the features introduced in Audit Assistant G2
+  enableG2: true
+
+  # enable is to enable all the features introduced in Audit Assistant G1
+  enableG1: true
+
+  # apiRequestRetentionDays is the time in days after that an API request audit log will be deleted from Audit Assistant (-1 disables cleanup, 0 disables audit log) - G2 only
+  apiRequestRetentionDays: 365
+
+  # Minimum percentage of increase in training data to retrain a classifier - G2 only
+  retrainDataThreshold: 5
+
+  # Minimum time (in seconds) between two consecutive trainings - G2 only
+  minSecondsBetweenTraining: 86400
+
+  # Minimum records per class required to train a classifier - G2 only
+  minRecordsPerClass: 10
+
+  # Parallelism for spark. if value set as 0 then parallelism considered as 3 * number of CPU cores - G2 only
+  sparkParallelism: 0
+
+  # Minimum percentage of increase in training data to recalculate model performance
+  recalculatePerformanceThreshold: 5
+
+  # Minimum time (in seconds) between two consecutive model performance calculation
+  minSecondsBetweenPerformanceCalculation: 86400
+
+  # Data of last daysForModelWeightCalculation from version statistics table will be used to calculate weight of the local and global models
+  daysForModelWeightCalculation: 90
+
+# mail server credentials secret settings
+mailServerCredentials:
+  # secretName used for creating kubernetes secret with mail server credentials
+  secretName: ""
+  # usernameKey used to set mail server username in kubernetes secret
+  usernameKey: ""
+  # passwordKey used to set mail server password in kubernetes secret
+  passwordKey: ""
+
+# For each Random forest parameters, default values can be tuned.
+# And also, Random forest parameters can be set for each language.
+# For example,
+#   numTrees:
+#     default: 20
+#     java: 21
+# G2 only
+randomForestParams:
+  # numTrees is the number of trees to be used in the classifier while training the models
+  numTrees:
+    default: 300
+    c#: 85
+    javascript: 127
+    php: 125
+    xml: 51
+    c: 85
+    c++: 85
+    java properties: 129
+    asp.net: 211
+    jsp: 135
+    unknown: 110
+
+  # maxDepth is the longest path between root node and leaf node of the trees used for training the models
+  maxDepth:
+    default: 9
+    c#: 16
+    java: 28
+    javascript: 5
+    php: 28
+    sql: 25
+    xml: 18
+    java properties: 27
+    asp.net: 20
+    jsp: 29
+    python: 5
+    swift: 27
+
+  # minInstancesPerNode is the minimum number of training instances required for a node in the tree to split further
+  minInstancesPerNode:
+    default: 5
+    c#: 7
+    html: 27
+    java: 29
+    javascript: 13
+    php: 19
+    xml: 15
+    c: 7
+    c++: 7
+    java properties: 21
+    asp.net: 21
+    unknown: 29
+
+# secretRef external trust store secret settings
+secretRef:
+  # name of the secret
+  name:
+  # keys is key names for each attribute in the above secret created
+  keys:
+    # jvmTruststoreFileEntry jvm trust store file key created from the above secret
+    jvmTruststoreFileEntry:
+    # jvmTruststorePassword jvm trust store password
+    jvmTruststorePassword:
+
+# components is a map of configurations for Audit Assistant pods and containers
+components:
+  predict:
+    replicaCount: 2
+  webapp:
+    replicaCount: 2
+  predict-v2:
+    replicaCount: 2
+  train-v2:
+    replicaCount: 2
+
+# productLicense is a text of Audit Assistant license file (required),
+# can be set using helm CLI option "--set-file=productLicense=path/to/license.xml"
+productLicense: ""
